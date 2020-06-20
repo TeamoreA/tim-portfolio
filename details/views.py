@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.views import generic
+from .models import Project
 
 class IndexView(generic.ListView):
+    model = Project
     template_name = 'details/index.html'
-    context_object_name = 'latest_question_list'
-    def get_queryset(self):
-        return ["Hello world","what now"]
+    

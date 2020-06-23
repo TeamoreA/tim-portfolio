@@ -20,15 +20,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7&^3*eb&g858vqr2)cwlg7cf)r1-252%4(a-q7ut0=&v!1c6pg'
+ALLOWED_HOSTS = [
+    "*",
+    "http://localhost:8000"
+    "https://tim-portfolio-2020.herokuapp.com",
+    ]
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = True  # TODO Change to False
+# Application definition
 
-ALLOWED_HOSTS = ['https://tim-portfolio-2020.herokuapp.com']
-
-
+# Application definition
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8000",
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,15 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # boostrap4 app
-    'bootstrap4',
     # local apps,
     'details.apps.DetailsConfig',
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -127,19 +129,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
-STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
-
-# Extra lookup directories for collectstatic to find static files
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
+STATIC_ROOT  =   os.path.join(BASE_DIR, 'staticfiles')
 
 #  Add configuration for static files storage using whitenoise
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 import dj_database_url 
 prod_db  =  dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(prod_db)
